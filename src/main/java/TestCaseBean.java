@@ -2,6 +2,7 @@ import java.util.Map;
 
 public class TestCaseBean {
   private String TestCaseNum;
+  private String Comment;
   private String PackageName;
   private String ClassName;
   private String MethodName;
@@ -27,7 +28,8 @@ public class TestCaseBean {
             '}';
   }
 
-  public TestCaseBean(String testCaseNum, String packageName,
+  public TestCaseBean(String testCaseNum,
+                      String comment, String packageName,
                       String className,
                       String methodName,
                       String mainBO,
@@ -38,6 +40,7 @@ public class TestCaseBean {
                       String assertSentence,
                       String norP) {
     TestCaseNum = testCaseNum;
+    Comment = comment;
     PackageName = packageName;
     ClassName = className;
     MethodName = methodName;
@@ -128,5 +131,13 @@ public class TestCaseBean {
 
   public void setTestCaseNum(String testCaseNum) {
     TestCaseNum = testCaseNum;
+  }
+
+  public String getComment() {
+    return Comment;
+  }
+
+  public void setComment(String comment) {
+    Comment = comment;
   }
 }

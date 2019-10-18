@@ -6,7 +6,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 //import org.junit.Assert;
 
 import javax.lang.model.element.Modifier;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
@@ -42,7 +41,8 @@ public class CodeGenerate {
       classGroupBy.forEach((className, cases) -> {
         try {
           System.out.println("=============");
-          GenerateFiles(pakegeName, className, cases,testCaseBeans).writeTo(new File("test"));
+          GenerateFiles(pakegeName, className, cases,testCaseBeans).writeTo(System.out);
+//          GenerateFiles(pakegeName, className, cases,testCaseBeans).writeTo(new File("test"));
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -84,7 +84,8 @@ public class CodeGenerate {
               .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
               .returns(void.class)
               .addParameter(String[].class, "args")
-              .addStatement("// 测试用例");
+              .addStatement("// 测试用例")
+              .addStatement("// "+caseIt.getComment());
 
 
       //1.1.1添加前置依赖项
@@ -171,15 +172,16 @@ public class CodeGenerate {
     int rowNum = sheet1.getLastRowNum();
 
     int testCaseNum = 0;
-    int pakegeColNum = 1;
-    int classColNum = 2;
-    int methodColNum = 3;
-    int norPColNum = 4;
-    int mainboColNum = 5;
-    int assertSentenceNum = 6;
-    int testMethdNum = 7;
-    int forwardDependencyNum = 8;
-    int fildStartNum = 9;
+    int commentNum=1;
+    int pakegeColNum = 2;
+    int classColNum = 3;
+    int methodColNum = 4;
+    int norPColNum = 5;
+    int mainboColNum = 6;
+    int assertSentenceNum = 7;
+    int testMethdNum = 8;
+    int forwardDependencyNum = 9;
+    int fildStartNum = 10;
 
     List<TestCaseBean> cases = new ArrayList<TestCaseBean>();
     //第0行为表头
@@ -195,6 +197,7 @@ public class CodeGenerate {
 
       TestCaseBean testCaseBeans = new TestCaseBean(
                parseSheetContent(sheet1, i, testCaseNum),
+               parseSheetContent(sheet1, i, commentNum),
                parseSheetContent(sheet1, i, pakegeColNum),
               parseSheetContent(sheet1, i, classColNum),
               parseSheetContent(sheet1, i, methodColNum),
